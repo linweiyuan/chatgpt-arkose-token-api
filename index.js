@@ -4,6 +4,7 @@ const http = require('http');
 const fun = require('funcaptcha');
 
 http.createServer(async (req, res) => {
+  console.log('...')
   const token = await fun.getToken({
     pkey: "35536E1E-65B4-4D96-9D97-6ADB7EFF8147",
     surl: "https://tcr9i.chat.openai.com",
@@ -14,4 +15,4 @@ http.createServer(async (req, res) => {
   });
   res.write(JSON.stringify(token));
   res.end();
-}).listen(8080);
+}).listen(65526);

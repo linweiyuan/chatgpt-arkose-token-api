@@ -1,0 +1,8 @@
+services:
+  chatgpt-arkose-token-api:
+    build: .
+    container_name: chatgpt-arkose-token-api
+    image: linweiyuan/chatgpt-arkose-token-api
+    ports:
+      - 65526:65526
+    restart: unless-stopped
