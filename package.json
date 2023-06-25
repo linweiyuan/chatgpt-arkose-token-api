@@ -1,0 +1,23 @@
+{
+  "name": "chatgpt-arkose-token-api",
+  "version": "1.0.0",
+  "description": "ChatGPT arkose_token generator",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/linweiyuan/chatgpt-arkose-token-api.git"
+  },
+  "keywords": [
+    "GPT-4",
+    "arkose_token"
+  ],
+  "author": "linweiyuan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/linweiyuan/chatgpt-arkose-token-api/issues"
+  },
+  "homepage": "https://github.com/linweiyuan/chatgpt-arkose-token-api#readme"
+}
