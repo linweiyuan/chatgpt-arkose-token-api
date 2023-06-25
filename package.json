@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/linweiyuan/chatgpt-arkose-token-api/issues"
   },
-  "homepage": "https://github.com/linweiyuan/chatgpt-arkose-token-api#readme"
+  "homepage": "https://github.com/linweiyuan/chatgpt-arkose-token-api#readme",
+  "dependencies": {
+    "funcaptcha": "^1.0.37"
+  }
 }
