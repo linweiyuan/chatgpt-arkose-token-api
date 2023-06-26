@@ -13,6 +13,6 @@ http.createServer(async (req, res) => {
     },
     site: "https://chat.openai.com"
   });
-  res.write(JSON.stringify(token));
-  res.end();
+  res.setHeader('Content-Type', 'application/json');
+  res.end(JSON.stringify(token));
 }).listen(65526);
