@@ -1,7 +1,12 @@
-FROM node:alpine
+FROM golang:alpine AS builder
 WORKDIR /app
-COPY package.json .
-COPY index.js .
-RUN npm i
-EXPOSE 65526
-CMD [ "node", "index.js" ]
+COPY . .
+RUN go build -ldflags="-w -s" -o chatgpt-arkose-token-api main.go
+
+FROM alpine
+WORKDIR /app
+COPY --from=builder /app/chatgpt-arkose-token-api .
+RUN apk add --no-cache tzdata
+ENV TZ=Asia/Shanghai
+EXPOSE 8080
+CMD ["/app/chatgpt-arkose-token-api"]
