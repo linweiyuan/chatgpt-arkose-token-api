@@ -14,7 +14,7 @@ func init() {
 func main() {
 	router := gin.Default()
 
-	router.GET("/", api.GenerateArkoseToken)
+	router.GET("/", api.GetArkoseToken)
 
 	router.Run(":8081")
 }
