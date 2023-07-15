@@ -39,6 +39,6 @@ services:
     container_name: chatgpt-proxy-server-arkose
     image: linweiyuan/chatgpt-proxy-server-arkose
     environment:
-      - LOG_LEVEL=OFF
+      - LOG_LEVEL=fatal
     restart: unless-stopped
 ```
