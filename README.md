@@ -23,8 +23,8 @@ services:
       - 8080:8080
     environment:
       - TZ=Asia/Shanghai
-      - GO_CHATGPT_API_PROXY=socks5://chatgpt-proxy-server-warp:65535
-      - GO_CHATGPT_API_ARKOSE_TOKEN_URL=http://chatgpt-proxy-server-arkose:8081/token
+      - PROXY=socks5://chatgpt-proxy-server-warp:65535
+      - ARKOSE_TOKEN_URL=http://chatgpt-proxy-server-arkose:8081/token
     depends_on:
       - chatgpt-proxy-server-warp
       - chatgpt-proxy-server-arkose
