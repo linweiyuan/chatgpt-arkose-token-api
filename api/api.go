@@ -1,6 +1,7 @@
 package api
 
 import (
+	"encoding/json"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -11,7 +12,8 @@ import (
 
 //goland:noinspection GoUnhandledErrorResult
 func GetArkoseToken(c *gin.Context) {
-	token, err := funcaptcha.GetOpenAITokenWithBx(browser.BX)
+	data, _ := json.Marshal(browser.BX)
+	token, err := funcaptcha.GetOpenAITokenWithBx(string(data))
 	if err != nil {
 		logger.Error(err.Error())
 

@@ -2,7 +2,9 @@ package browser
 
 import (
 	"encoding/base64"
+	"encoding/json"
 	"fmt"
+	"github.com/linweiyuan/funcaptcha"
 	"log"
 	"net/url"
 	"strings"
@@ -19,7 +21,7 @@ const (
 )
 
 var (
-	BX               string
+	BX               []interface{}
 	pageReadyChannel = make(chan bool)
 	bxReadyChannel   = make(chan bool)
 )
@@ -57,13 +59,13 @@ func init() {
 		}`,
 			funcaptchaApiJS,
 			"let time = new Date().getTime() / 1000;",
-			fmt.Sprintf(`return ALFCCJS.decrypt('%s', "%s" + Math.round(time - (time %% 21600)));`, ctIvS, userAgent),
+			fmt.Sprintf(`return JSON.parse(ALFCCJS.decrypt('%s', "%s" + Math.round(time - (time %% 21600))));`, ctIvS, userAgent),
 		), nil)
 		if err != nil {
 			logger.Error("Failed to get BX.")
 		}
 
-		BX = bx.(string)
+		BX = bx.([]interface{})
 		route.Continue()
 		bxReadyChannel <- true
 	})
@@ -77,6 +79,11 @@ func init() {
 
 	go func() {
 		<-bxReadyChannel
+
+		// fix 403
+		data, _ := json.Marshal(BX)
+		funcaptcha.GetOpenAITokenWithBx(string(data))
+
 		logger.Info("Service arkose-token-api is ready.")
 	}()
 
