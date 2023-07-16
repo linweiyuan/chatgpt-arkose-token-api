@@ -7,6 +7,7 @@ import (
 	"github.com/linweiyuan/funcaptcha"
 	"log"
 	"net/url"
+	"os"
 	"strings"
 	"time"
 
@@ -24,6 +25,7 @@ var (
 	BX               []interface{}
 	pageReadyChannel = make(chan bool)
 	bxReadyChannel   = make(chan bool)
+	proxy            string
 )
 
 //goland:noinspection GoUnhandledErrorResult,SpellCheckingInspection,HttpUrlsUsage
@@ -38,7 +40,17 @@ func init() {
 		return
 	}
 
-	browser, err := pw.Firefox.Launch()
+	browserTypeLaunchOptions := playwright.BrowserTypeLaunchOptions{}
+	proxy = os.Getenv("PROXY")
+	if proxy != "" {
+		bypass := "127.0.0.1"
+		browserTypeLaunchOptions.Proxy = &playwright.Proxy{
+			Server: &proxy,
+			Bypass: &bypass,
+		}
+	}
+
+	browser, err := pw.Firefox.Launch(browserTypeLaunchOptions)
 	if err != nil {
 		log.Fatal(err.Error())
 		return
