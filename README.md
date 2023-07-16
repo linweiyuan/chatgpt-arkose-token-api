@@ -30,13 +30,17 @@ services:
       - chatgpt-proxy-server-arkose
     restart: unless-stopped
 
-  chatgpt-proxy-server-warp:
-    container_name: chatgpt-proxy-server-warp
-    image: linweiyuan/chatgpt-proxy-server-warp
-    restart: unless-stopped
-
   chatgpt-proxy-server-arkose:
     container_name: chatgpt-proxy-server-arkose
     image: linweiyuan/chatgpt-proxy-server-arkose
+    environment:
+      - PROXY=socks5://chatgpt-proxy-server-warp:65535
+    depends_on:
+      - chatgpt-proxy-server-warp
+    restart: unless-stopped
+
+  chatgpt-proxy-server-warp:
+    container_name: chatgpt-proxy-server-warp
+    image: linweiyuan/chatgpt-proxy-server-warp
     restart: unless-stopped
 ```
