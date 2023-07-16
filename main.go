@@ -22,6 +22,7 @@ func main() {
 	})
 
 	router.GET("/token", api.GetArkoseToken)
+	router.GET("/bx", api.GetBX)
 
 	router.Run(":8081")
 }

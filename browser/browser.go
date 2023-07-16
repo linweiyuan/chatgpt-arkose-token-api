@@ -19,9 +19,9 @@ const (
 )
 
 var (
-	BX                  string
-	pageReadyChannel    = make(chan bool)
-	serviceReadyChannel = make(chan bool)
+	BX               string
+	pageReadyChannel = make(chan bool)
+	bxReadyChannel   = make(chan bool)
 )
 
 //goland:noinspection GoUnhandledErrorResult,SpellCheckingInspection,HttpUrlsUsage
@@ -64,21 +64,35 @@ func init() {
 		}
 
 		BX = bx.(string)
-		serviceReadyChannel <- true
+		route.Continue()
+		bxReadyChannel <- true
 	})
 
 	go func() {
 		<-pageReadyChannel
-		page.Goto("http://127.0.0.1:8081")
-		button, _ := page.QuerySelector("#click")
-		time.Sleep(time.Second) // must sleep 1s here
-		button.Click()
+		clickButton(page)
 	}()
 
 	pageReadyChannel <- true
 
 	go func() {
-		<-serviceReadyChannel
+		<-bxReadyChannel
 		logger.Info("Service arkose-token-api is ready.")
 	}()
+
+	go func() {
+		for {
+			time.Sleep(time.Hour)
+			clickButton(page)
+			<-bxReadyChannel
+		}
+	}()
+}
+
+//goland:noinspection GoUnhandledErrorResult
+func clickButton(page playwright.Page) {
+	page.Goto("http://127.0.0.1:8081")
+	button, _ := page.QuerySelector("#click")
+	time.Sleep(time.Second) // must sleep 1s here
+	button.Click()
 }

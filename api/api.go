@@ -25,3 +25,10 @@ func GetArkoseToken(c *gin.Context) {
 		"token": token,
 	})
 }
+
+//goland:noinspection GoUnhandledErrorResult
+func GetBX(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{
+		"bx": browser.BX,
+	})
+}
