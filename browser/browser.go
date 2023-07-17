@@ -4,13 +4,13 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
-	"github.com/linweiyuan/funcaptcha"
 	"log"
 	"net/url"
 	"os"
 	"strings"
 	"time"
 
+	"github.com/linweiyuan/funcaptcha"
 	"github.com/linweiyuan/go-logger/logger"
 	"github.com/playwright-community/playwright-go"
 )
