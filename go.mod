@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/gin-gonic/gin v1.9.1
-	github.com/linweiyuan/funcaptcha v0.0.0-20230716080642-faf9190605ce
+	github.com/linweiyuan/funcaptcha v0.0.0-20230720175126-c720855db995
 	github.com/linweiyuan/go-logger v0.0.0-20230709142852-da1f090a7d4c
 	github.com/playwright-community/playwright-go v0.3500.0
 )
