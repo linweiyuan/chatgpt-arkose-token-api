@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/url"
 	"os"
+	"strconv"
 	"strings"
 	"time"
 
@@ -26,6 +27,7 @@ var (
 	bxReadyChannel   = make(chan bool)
 	proxy            string
 	page             playwright.Page
+	Port             = 8081
 )
 
 //goland:noinspection GoUnhandledErrorResult,SpellCheckingInspection,HttpUrlsUsage
@@ -48,6 +50,12 @@ func init() {
 			Server: &proxy,
 			Bypass: &bypass,
 		}
+	}
+
+	port := os.Getenv("PORT")
+	if port != "" {
+		envPort, _ := strconv.Atoi(port)
+		Port = envPort
 	}
 
 	browser, err := pw.Firefox.Launch(browserTypeLaunchOptions)
@@ -93,7 +101,7 @@ func init() {
 		data, _ := json.Marshal(BX)
 		funcaptcha.GetOpenAITokenWithBx(string(data))
 
-		logger.Info("Service arkose-token-api is ready.")
+		logger.Info(fmt.Sprintf("Service arkose-token-api is ready: %d", Port))
 	}()
 
 	go func() {
@@ -107,7 +115,7 @@ func init() {
 
 //goland:noinspection GoUnhandledErrorResult
 func clickButton(page playwright.Page) {
-	page.Goto("http://127.0.0.1:8081")
+	page.Goto(fmt.Sprintf("http://127.0.0.1:%d", Port))
 	button, _ := page.QuerySelector("#click")
 	time.Sleep(time.Second) // must sleep 1s here
 	button.Click()
