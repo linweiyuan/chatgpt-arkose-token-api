@@ -97,9 +97,16 @@ func init() {
 	go func() {
 		<-bxReadyChannel
 
-		// fix 403
+		// fix 403, the first request will always return 403
 		data, _ := json.Marshal(BX)
 		funcaptcha.GetOpenAITokenWithBx(string(data))
+
+		// this request is to check to arkose token is valid
+		token, _ := funcaptcha.GetOpenAITokenWithBx(string(data))
+		if !strings.Contains(token, "sup") {
+			logger.Error("Captcha is detected, please update environment variable PORT to a new port.")
+			return
+		}
 
 		logger.Info(fmt.Sprintf("Service arkose-token-api is ready: %d", Port))
 	}()
